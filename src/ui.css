@@ -1,4 +1,5 @@
 :root {
+  --padding: 16px;
   --color-bg: var(--figma-color-bg);
   --color-bg-hover: var(--figma-color-bg-hover);
   --color-bg-active: var(--figma-color-bg-pressed);
@@ -33,6 +34,8 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
   margin: 0;
+  height: 100%;
+  width: 100%;
 }
 
 button {
@@ -102,4 +105,13 @@ footer > * + * {
 img {
   height: auto;
   width: 2rem;
+}
+
+#content {
+  height: calc(100% - var(--padding)*2);
+  width: calc(100% - var(--padding)*2);
+  overflow-y: scroll;
+  padding-top: var(--padding);
+  padding-left: var(--padding);
+  padding-right: var(--padding);
 }
