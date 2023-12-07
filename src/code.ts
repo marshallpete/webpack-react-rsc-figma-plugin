@@ -1,17 +1,19 @@
 figma.showUI(__html__, { themeColors: true, height: 720, width: 1200 });
 
 figma.ui.onmessage = (msg) => {
-  if (msg.type === "create-rectangles") {
+  if (msg.type === "insert-chart") {
+    // everything added to the current page
+    // select and focus all nodes at the end
     const nodes = [];
 
-    for (let i = 0; i < msg.count; i++) {
-      const rect = figma.createRectangle();
-      rect.x = i * 150;
-      rect.fills = [{ type: "SOLID", color: { r: 1, g: 0.5, b: 0 } }];
-      figma.currentPage.appendChild(rect);
-      nodes.push(rect);
-    }
+    // create the chart
+    const svg = figma.createNodeFromSvg(msg.svg);
+    // add it to the page
+    figma.currentPage.appendChild(svg);
+    // add it to the selection
+    nodes.push(svg);
 
+    // select and focus chart
     figma.currentPage.selection = nodes;
     figma.viewport.scrollAndZoomIntoView(nodes);
   }

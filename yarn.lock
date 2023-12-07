@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@adobe/react-spectrum-charts@^0.0.1-alpha.10":
-  version "0.0.1-alpha.10"
-  resolved "https://registry.yarnpkg.com/@adobe/react-spectrum-charts/-/react-spectrum-charts-0.0.1-alpha.10.tgz#13a047c2f26542382f10e12f01d9d87ab10511d1"
-  integrity sha512-AyzeD6Yk90cBuhlxck9jjtDPd+1mB+pCxsGeRZ8Bpv+YM+p+Hh/WokLrQ2+A4r46z/XeYXPnybuK4giy7RUr5A==
+"@adobe/react-spectrum-charts@^0.0.1-alpha.12":
+  version "0.0.1-alpha.12"
+  resolved "https://registry.yarnpkg.com/@adobe/react-spectrum-charts/-/react-spectrum-charts-0.0.1-alpha.12.tgz#ea21171d0b878be091a46630fd22b213040c8720"
+  integrity sha512-bG/Nq38Sll/noQgiuTthCei1jq/IeLre0+eQUkzm77Z2t4RGv4+Xlx0lqTKhwHkKtETo12HopSHZEEWAFOO0Bg==
   dependencies:
     "@adobe/react-spectrum" ">= 3.23.0"
     immer ">= 9.0.0"

@@ -3,7 +3,8 @@
     "target": "es6",
     "jsx": "react",
     "typeRoots": ["./node_modules/@types", "./node_modules/@figma"],
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

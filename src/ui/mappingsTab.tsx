@@ -1,5 +1,5 @@
 import { Flex, Picker, Item, Key, Text, Divider } from "@adobe/react-spectrum";
-import * as React from "react";
+import React, { MutableRefObject } from "react";
 import { useEffect, Dispatch, SetStateAction, FC } from "react";
 
 import { Bar, Chart } from "@adobe/react-spectrum-charts";
@@ -15,6 +15,7 @@ interface MappingsTabProps {
   setXAxis: Dispatch<SetStateAction<Key>>;
   series: Key;
   setSeries: Dispatch<SetStateAction<Key>>;
+  setChartRef?: (chartRef: MutableRefObject<any>) => void;
 }
 
 export const MappingsTab: FC<MappingsTabProps> = ({
@@ -27,6 +28,7 @@ export const MappingsTab: FC<MappingsTabProps> = ({
   setXAxis,
   series,
   setSeries,
+  setChartRef,
 }) => {
   const chartTypeOptions = [
     { id: "bar", name: "Bar" },
