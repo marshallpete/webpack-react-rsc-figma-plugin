@@ -3,6 +3,7 @@ import * as React from "react";
 import { useEffect, Dispatch, SetStateAction, FC } from "react";
 
 import { Bar, Chart } from "@adobe/react-spectrum-charts";
+import { buildChart } from "./chartBuilder";
 
 interface MappingsTabProps {
   chartData: { data: unknown; description: string };
@@ -98,16 +99,7 @@ export const MappingsTab: FC<MappingsTabProps> = ({
       </Flex>
 
       <Flex flexGrow={2}>
-        <Chart
-          data={[
-            { x: 0, y: 2 },
-            { x: 1, y: 4 },
-          ]}
-          width={300}
-          height={200}
-        >
-          <Bar dimension="x" metric="y" />
-        </Chart>
+        {buildChart(chartType, chartData.data, xAxis, yAxis, series)}
       </Flex>
     </Flex>
   );

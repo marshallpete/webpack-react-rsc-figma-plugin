@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Bar, Chart } from "@adobe/react-spectrum-charts";
+import { Bar, Chart, Line } from "@adobe/react-spectrum-charts";
 
 export const buildChart = (chartType, data, xAxis, yAxis, series) => {
   switch (chartType) {
@@ -15,13 +15,21 @@ export const buildChart = (chartType, data, xAxis, yAxis, series) => {
 
 const buildBarChart = (data, xAxis, yAxis, series) => {
   return (
-    <Chart
-      data={data}
-      width={300}
-      height={200}
-    >
-      <Bar dimension={yAxis} metric={xAxis} color={series}/>
+    <Chart data={data} width={900} height={600}>
+      <Bar dimension={yAxis} metric={xAxis} color={series} />
     </Chart>
   );
 };
-const buildLineChart = (data, xAxis, yAxis, series) => {};
+const buildLineChart = (data, xAxis, yAxis, series) => {
+  return (
+    <Chart data={data} width={900} height={600}>
+      <Line
+        dimension={xAxis}
+        metric={yAxis}
+        color={series}
+        scaleType="time"
+        name="line0"
+      />
+    </Chart>
+  );
+};

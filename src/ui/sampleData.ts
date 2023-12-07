@@ -197,7 +197,7 @@ export const featureUsage = {
       series: "Add Bar viz",
     },
   ],
-  description: "this data is useful for scatterplots",
+  description: "this data is useful for lines",
 };
 export const browserUsage = {
   data: [
