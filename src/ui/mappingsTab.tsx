@@ -3,7 +3,7 @@ import React, { MutableRefObject } from 'react';
 import { useEffect, Dispatch, SetStateAction, FC } from 'react';
 
 import { buildChart } from './chartBuilder';
-import { AxisProps, LegendProps, Position } from '@adobe/react-spectrum-charts';
+import { AxisProps, LabelFormat, LegendProps, Position } from '@adobe/react-spectrum-charts';
 import { SupportedChartProps } from './types';
 
 interface MappingsTabProps {
@@ -122,46 +122,103 @@ export const MappingsTab: FC<MappingsTabProps> = ({
 						}
 					</Text>
 					<Divider size="M" />
-					<Text>{'xAxis'}</Text>
-					<Checkbox isSelected={includeXAxis} onChange={() => setIncludeXAxis(!includeXAxis)}>
-						Include xAxis
-					</Checkbox>
-					{includeXAxis && (
-						<Picker
-							label="Position"
-							items={[
-								{ id: 'top', name: 'Top' },
-								{ id: 'bottom', name: 'Bottom' },
-							]}
-							selectedKey={xAxisProps.position}
-							onSelectionChange={(key: Key) =>
-								setXAxisProps({ ...xAxisProps, position: key as Position })
-							}
-						>
-							{(item) => <Item>{item.name}</Item>}
-						</Picker>
-					)}
+          <Text>{"xAxis"}</Text>
+          <Checkbox
+            isSelected={includeXAxis}
+            onChange={() => setIncludeXAxis(!includeXAxis)}
+          >
+            Include xAxis
+          </Checkbox>
+          {includeXAxis && (
+            <>
+              <TextField
+                label="title"
+                value={xAxisProps.title}
+                onChange={(input) =>
+                  setYAxisProps({ ...xAxisProps, title: input })
+                }
+              />
+              <Picker
+                label="Label format"
+                items={[
+                  { id: "linear", name: "Linear" },
+                  { id: "percentage", name: "Percentage" },
+                  { id: "time", name: "Time" },
+                ]}
+                selectedKey={xAxisProps.labelFormat}
+                onSelectionChange={(key: Key) =>
+                  setXAxisProps({
+                    ...xAxisProps,
+                    labelFormat: key as LabelFormat,
+                  })
+                }
+              >
+                {(item) => <Item>{item.name}</Item>}
+              </Picker>
+              <Picker
+                label="Position"
+                items={[
+                  { id: "top", name: "Top" },
+                  { id: "bottom", name: "Bottom" },
+                ]}
+                selectedKey={xAxisProps.position}
+                onSelectionChange={(key: Key) =>
+                  setXAxisProps({ ...xAxisProps, position: key as Position })
+                }
+              >
+                {(item) => <Item>{item.name}</Item>}
+              </Picker>
+            </>
+          )}
 					<Divider size="M" />
-					<Text>{'yAxis'}</Text>
-					<Checkbox isSelected={includeYAxis} onChange={() => setIncludeYAxis(!includeYAxis)}>
-						Include yAxis
-					</Checkbox>
-					<TextField
-						label="title"
-						value={yAxisProps.title}
-						onChange={(input) => setYAxisProps({ ...yAxisProps, title: input })}
-					/>
-					<Picker
-						label="Position"
-						items={[
-							{ id: 'left', name: 'Left' },
-							{ id: 'right', name: 'Right' },
-						]}
-						selectedKey={yAxisProps.position}
-						onSelectionChange={(key: Key) => setYAxisProps({ ...yAxisProps, position: key as Position })}
-					>
-						{(item) => <Item>{item.name}</Item>}
-					</Picker>
+          <Text>{"yAxis"}</Text>
+          <Checkbox
+            isSelected={includeYAxis}
+            onChange={() => setIncludeYAxis(!includeYAxis)}
+          >
+            Include yAxis
+          </Checkbox>
+          {includeYAxis && (
+            <>
+              <TextField
+                label="title"
+                value={yAxisProps.title}
+                onChange={(input) =>
+                  setYAxisProps({ ...yAxisProps, title: input })
+                }
+              />
+              <Picker
+                label="Label format"
+                items={[
+                  { id: "linear", name: "Linear" },
+                  { id: "percentage", name: "Percentage" },
+                  { id: "time", name: "Time" },
+                ]}
+                selectedKey={yAxisProps.labelFormat}
+                onSelectionChange={(key: Key) =>
+                  setYAxisProps({
+                    ...yAxisProps,
+                    labelFormat: key as LabelFormat,
+                  })
+                }
+              >
+                {(item) => <Item>{item.name}</Item>}
+              </Picker>
+              <Picker
+                label="Position"
+                items={[
+                  { id: "left", name: "Left" },
+                  { id: "right", name: "Right" },
+                ]}
+                selectedKey={yAxisProps.position}
+                onSelectionChange={(key: Key) =>
+                  setYAxisProps({ ...yAxisProps, position: key as Position })
+                }
+              >
+                {(item) => <Item>{item.name}</Item>}
+              </Picker>
+            </>
+          )}
 					<Divider size="M" />
 					<Text>{'Legend'}</Text>
 					<Checkbox isSelected={includeLegend} onChange={() => setIncludeLegend(!includeLegend)}>

@@ -26,7 +26,7 @@ export const ChartControls: FC = () => {
 	const [chartType, setChartType] = useState('bar');
 	const [yAxis, setYAxis] = useState('');
 	const [xAxis, setXAxis] = useState('');
-	const [series, setSeries] = useState('');
+	const [series, setSeries] = useState();
 	const [includeLegend, setIncludeLegend] = useState(false);
 	const [legendProps, setLegendProps] = useState<LegendProps>({
 		position: 'bottom',
@@ -52,7 +52,7 @@ export const ChartControls: FC = () => {
 	useEffect(() => {
 		setYAxis('');
 		setXAxis('');
-		setSeries('');
+		setSeries(undefined);
 		setLegendProps({});
 		setIncludeLegend(false);
 	}, [chartData]);
@@ -84,9 +84,9 @@ export const ChartControls: FC = () => {
 		if (!yAxisProps.title) setYAxisProps({ ...yAxisProps, title: yAxis });
 	}, [yAxis]);
 
-	useEffect(() => {
-		if (!xAxisProps.title) setYAxisProps({ ...xAxisProps, title: xAxis });
-	}, [xAxis]);
+  useEffect(() => {
+    if (!xAxisProps.title) setXAxisProps({ ...xAxisProps, title: xAxis });
+  }, [xAxis]);
 
 	return (
 		<>

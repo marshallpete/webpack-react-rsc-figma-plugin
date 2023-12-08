@@ -112,15 +112,15 @@ const buildLineChart = (
 		setChartRef?.(chartRef);
 	}, [chartRef]);
 
-	const { position } = legendProps;
-	const { position: xAxisPosition, title: xAxisTitle } = xAxisProps;
-	const { position: yAxisPosition, title: yAxisTitle } = yAxisProps;
+	const { position: legendPosition } = legendProps;
+	const { position: xAxisPosition, title: xAxisTitle, labelFormat: xAxisLabelFormat } = xAxisProps;
+	const { position: yAxisPosition, title: yAxisTitle, labelFormat: yAxisLabelFormat } = yAxisProps;
 	return (
-		<Chart {...chartProps} data={data} ref={chartRef}>
-			{includeXAxis && <Axis position={xAxisPosition} title={xAxisTitle} />}
-			{includeYAxis && <Axis position={yAxisPosition} title={yAxisTitle} />}
+		<Chart {...chartProps} data={data} width={600} height={400} ref={chartRef}>
+			{includeXAxis && <Axis position={xAxisPosition} title={xAxisTitle} labelFormat={xAxisLabelFormat} />}
+			{includeYAxis && <Axis position={yAxisPosition} title={yAxisTitle} labelFormat={yAxisLabelFormat} />}
 			<Line dimension={xAxis} metric={yAxis} color={series} scaleType="time" name="line0" />
-			{includeLegend && <Legend position={position} />}
+			{includeLegend && <Legend position={legendPosition} />}
 		</Chart>
 	);
 };
