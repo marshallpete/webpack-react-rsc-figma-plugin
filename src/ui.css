@@ -77,19 +77,15 @@ input:focus-visible {
   outline-color: var(--color-border-focus);
 }
 
-svg {
-  stroke: var(--color-icon, rgba(0, 0, 0, 0.9));
-}
-
 main {
-  align-items: center;
+  align-items: start;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 section {
-  align-items: center;
+  align-items: start;
   display: flex;
   flex-direction: column;
   justify-content: center;

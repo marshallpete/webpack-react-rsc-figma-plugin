@@ -20,9 +20,6 @@ import {
   ChangeEvent,
   useRef,
 } from "react";
-
-import { featureUsage, browserUsage, browserData } from "./sampleData";
-
 interface DataTabProps {
   dataText: string;
   setDataText: Dispatch<SetStateAction<string>>;
@@ -49,37 +46,15 @@ export const DataTab: FC<DataTabProps> = ({
   const SAMPLE_DATA_LABEL = "Sample data";
   const CUSTOM_DATA_LABEL = "Custom data";
 
-  let options = [
+  const options = [
     { id: "feature-usage", name: "Feature usage" },
     { id: "browser-usage", name: "Browser usage" },
     { id: "browser-data", name: "Browser data" },
   ];
 
+  const {data, description} = chartData;
   useEffect(() => {
-    if (selectedDataMode === "sample") {
-      switch (selectedSample) {
-        case "feature-usage":
-          setChartData(featureUsage);
-          break;
-        case "browser-usage":
-          setChartData(browserUsage);
-          break;
-        case "browser-data":
-          setChartData(browserData);
-          break;
-        default:
-          setChartData({ data: [], description: "" });
-      }
-    } else {
-      setChartData({
-        data: [],
-        description: "upload your own dataset as a csv file",
-      });
-    }
-  }, [selectedDataMode, selectedSample]);
-
-  useEffect(() => {
-    if (chartData.data) setDataText(arrayToCSV(chartData.data));
+    if (chartData) setDataText(arrayToCSV(data));
   }, [chartData]);
 
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
@@ -126,7 +101,7 @@ export const DataTab: FC<DataTabProps> = ({
             {(item) => <Item>{item.name}</Item>}
           </Picker>
         )}
-        <Text>{chartData.description}</Text>
+        <Text>{description}</Text>
 
         {selectedDataMode === "custom" ? (
           <Flex>

@@ -8,6 +8,12 @@ interface BuildStateProps {
   xAxis: string;
   yAxis: string;
   series: string;
+  includeLegend: boolean;
+  legendProps: any;
+  includeXAxis: boolean;
+  xAxisProps: any;
+  includeYAxis: boolean;
+  yAxisProps: any;
 }
 
 const BuildState: FC<BuildStateProps> = ({
@@ -16,11 +22,19 @@ const BuildState: FC<BuildStateProps> = ({
   xAxis,
   yAxis,
   series,
+  includeLegend,
+  legendProps,
+  includeXAxis,
+  xAxisProps,
+  includeYAxis,
+  yAxisProps,
 }) => {
   const [chartRef, setChartRef] = useState<MutableRefObject<any> | null>();
 
   useEffect(() => {
+    console.log("chartRef", chartRef);
     if (chartRef?.current) {
+      console.log("chartRef.current", chartRef.current);
       chartRef.current
         .getSvg()
         .then((svg) =>
@@ -48,6 +62,12 @@ const BuildState: FC<BuildStateProps> = ({
           xAxis,
           yAxis,
           series,
+          includeLegend,
+          legendProps,
+          includeXAxis,
+          xAxisProps,
+          includeYAxis,
+          yAxisProps,
           setChartRef
         )}
       </div>

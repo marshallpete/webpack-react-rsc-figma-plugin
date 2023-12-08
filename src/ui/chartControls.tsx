@@ -1,4 +1,4 @@
-import React, { MutableRefObject } from "react";
+import React, { MutableRefObject, useEffect } from "react";
 import { useState, FC } from "react";
 import {
   ActionButton,
@@ -12,7 +12,8 @@ import {
 import { DataTab } from "./dataTab";
 import { MappingsTab } from "./mappingsTab";
 import BuildState from "./BuildState";
-import { ChartProps } from "@adobe/react-spectrum-charts";
+import { featureUsage, browserUsage, browserData } from "./sampleData";
+import { AxisProps, LegendProps } from "@adobe/react-spectrum-charts";
 import { SupportedChartProps } from "./types";
 import ChartProperties from "./ChartProperties";
 
@@ -34,6 +35,17 @@ export const ChartControls: FC = () => {
   const [yAxis, setYAxis] = useState("");
   const [xAxis, setXAxis] = useState("");
   const [series, setSeries] = useState("");
+  const [includeLegend, setIncludeLegend] = useState(false);
+  const [legendProps, setLegendProps] = useState<LegendProps>({
+    position: "bottom",
+  });
+  const [xAxisProps, setXAxisProps] = useState<AxisProps>({
+    position: "bottom",
+    title: xAxis,
+  });
+  const [yAxisProps, setYAxisProps] = useState<AxisProps>({ position: "left" });
+  const [includeXAxis, setIncludeXAxis] = useState(false);
+  const [includeYAxis, setIncludeYAxis] = useState(false);
 
   // Properties tab state
   const [chartProps, setChartProps] = useState<SupportedChartProps>({
@@ -45,6 +57,45 @@ export const ChartControls: FC = () => {
     width: 900,
   });
 
+  useEffect(() => {
+    setYAxis("");
+    setXAxis("");
+    setSeries("");
+    setLegendProps({});
+    setIncludeLegend(false);
+  }, [chartData]);
+
+  useEffect(() => {
+    if (selectedDataMode === "sample") {
+      switch (selectedSample) {
+        case "feature-usage":
+          setChartData(featureUsage);
+          break;
+        case "browser-usage":
+          setChartData(browserUsage);
+          break;
+        case "browser-data":
+          setChartData(browserData);
+          break;
+        default:
+          setChartData({ data: [], description: "" });
+      }
+    } else {
+      setChartData({
+        data: [],
+        description: "upload your own dataset as a csv file",
+      });
+    }
+  }, [selectedDataMode, selectedSample]);
+
+  useEffect(() => {
+    if (!yAxisProps.title) setYAxisProps({ ...yAxisProps, title: yAxis });
+  }, [yAxis]);
+
+  useEffect(() => {
+    if (!xAxisProps.title) setYAxisProps({ ...xAxisProps, title: xAxis });
+  }, [xAxis]);
+
   return (
     <>
       {isBuilding && (
@@ -54,6 +105,12 @@ export const ChartControls: FC = () => {
           xAxis={xAxis}
           yAxis={yAxis}
           series={series}
+          includeLegend={includeLegend}
+          legendProps={legendProps}
+          includeXAxis={includeXAxis}
+          xAxisProps={xAxisProps}
+          includeYAxis={includeYAxis}
+          yAxisProps={yAxisProps}
         />
       )}
       {!isBuilding && (
@@ -101,6 +158,18 @@ export const ChartControls: FC = () => {
                 setXAxis={setXAxis}
                 series={series}
                 setSeries={setSeries}
+                legendProps={legendProps}
+                setLegendProps={setLegendProps}
+                includeLegend={includeLegend}
+                setIncludeLegend={setIncludeLegend}
+                includeXAxis={includeXAxis}
+                setIncludeXAxis={setIncludeXAxis}
+                setIncludeYAxis={setIncludeYAxis}
+                includeYAxis={includeYAxis}
+                xAxisProps={xAxisProps}
+                setXAxisProps={setXAxisProps}
+                yAxisProps={yAxisProps}
+                setYAxisProps={setYAxisProps}
               ></MappingsTab>
             </Item>
             <Item key="properties">
