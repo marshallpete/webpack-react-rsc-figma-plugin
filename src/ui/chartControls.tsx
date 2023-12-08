@@ -12,6 +12,9 @@ import {
 import { DataTab } from "./dataTab";
 import { MappingsTab } from "./mappingsTab";
 import BuildState from "./BuildState";
+import { ChartProps } from "@adobe/react-spectrum-charts";
+import { SupportedChartProps } from "./types";
+import ChartProperties from "./ChartProperties";
 
 export const ChartControls: FC = () => {
   // build state
@@ -33,6 +36,14 @@ export const ChartControls: FC = () => {
   const [series, setSeries] = useState("");
 
   // Properties tab state
+  const [chartProps, setChartProps] = useState<SupportedChartProps>({
+    backgroundColor: "transparent",
+    colors: "categorical16",
+    colorScheme: "light",
+    height: 600,
+    padding: 0,
+    width: 900,
+  });
 
   return (
     <>
@@ -92,7 +103,12 @@ export const ChartControls: FC = () => {
                 setSeries={setSeries}
               ></MappingsTab>
             </Item>
-            <Item key="properties">Alea jacta est.</Item>
+            <Item key="properties">
+              <ChartProperties
+                chartProps={chartProps}
+                setChartProps={setChartProps}
+              />
+            </Item>
           </TabPanels>
         </Tabs>
       )}
