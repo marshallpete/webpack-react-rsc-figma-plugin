@@ -1,9 +1,18 @@
-import { Flex, Picker, Item, Key, Text, Divider } from "@adobe/react-spectrum";
+import {
+  Flex,
+  Picker,
+  Item,
+  Key,
+  Text,
+  Divider,
+  Checkbox,
+  TextField,
+} from "@adobe/react-spectrum";
 import React, { MutableRefObject } from "react";
 import { useEffect, Dispatch, SetStateAction, FC } from "react";
 
-import { Bar, Chart } from "@adobe/react-spectrum-charts";
 import { buildChart } from "./chartBuilder";
+import { AxisProps, LegendProps, Position } from "@adobe/react-spectrum-charts";
 
 interface MappingsTabProps {
   chartData: { data: unknown; description: string };
@@ -15,7 +24,18 @@ interface MappingsTabProps {
   setXAxis: Dispatch<SetStateAction<Key>>;
   series: Key;
   setSeries: Dispatch<SetStateAction<Key>>;
-  setChartRef?: (chartRef: MutableRefObject<any>) => void;
+  legendProps: LegendProps;
+  setLegendProps: Dispatch<SetStateAction<LegendProps>>;
+  includeLegend: boolean;
+  setIncludeLegend: Dispatch<SetStateAction<boolean>>;
+  xAxisProps: AxisProps;
+  setXAxisProps: Dispatch<SetStateAction<AxisProps>>;
+  yAxisProps: AxisProps;
+  setYAxisProps: Dispatch<SetStateAction<AxisProps>>;
+  includeXAxis: boolean;
+  setIncludeXAxis: Dispatch<SetStateAction<boolean>>;
+  includeYAxis: boolean;
+  setIncludeYAxis: Dispatch<SetStateAction<boolean>>;
 }
 
 export const MappingsTab: FC<MappingsTabProps> = ({
@@ -28,7 +48,18 @@ export const MappingsTab: FC<MappingsTabProps> = ({
   setXAxis,
   series,
   setSeries,
-  setChartRef,
+  legendProps,
+  setLegendProps,
+  includeLegend,
+  setIncludeLegend,
+  xAxisProps,
+  setXAxisProps,
+  yAxisProps,
+  setYAxisProps,
+  includeXAxis,
+  setIncludeXAxis,
+  includeYAxis,
+  setIncludeYAxis,
 }) => {
   const chartTypeOptions = [
     { id: "bar", name: "Bar" },
@@ -51,57 +82,143 @@ export const MappingsTab: FC<MappingsTabProps> = ({
 
   return (
     <Flex gap="size-150" wrap height={"100%"} direction="row">
-      <Flex direction="column" width={250} gap="size-150">
-        <Picker
-          isRequired
-          label="Chart type"
-          items={chartTypeOptions}
-          selectedKey={chartType}
-          onSelectionChange={(key: Key) => setChartType(key)}
-        >
-          {(item) => <Item>{item.name}</Item>}
-        </Picker>
-        <Picker
-          isRequired
-          label="Y axis (the vertical one)"
-          items={axisOptions}
-          selectedKey={yAxis}
-          onSelectionChange={(key: Key) => setYAxis(key)}
-        >
-          {(item) => <Item>{item.name}</Item>}
-        </Picker>
-        <Text>{"This will work best with a metric (numerical data)"}</Text>
-        <Picker
-          isRequired
-          label="X axis (the horizontal one)"
-          items={axisOptions}
-          selectedKey={xAxis}
-          onSelectionChange={(key: Key) => setXAxis(key)}
-        >
-          {(item) => <Item>{item.name}</Item>}
-        </Picker>
-        <Text>
-          {"This will work best with temporal data (dates or timestamps)"}
-        </Text>
-
-        <Divider size="M" />
-        <Picker
-          label="Series (color)"
-          items={axisOptions}
-          selectedKey={series}
-          onSelectionChange={(key: Key) => setSeries(key)}
-        >
-          {(item) => <Item>{item.name}</Item>}
-        </Picker>
-        <Text>
-          {
-            "This is only required for line charts with multiple lines and will determine what each represents. It will work best if it's a dimension (string)"
-          }
-        </Text>
-      </Flex>
+      <div>
+        <Flex direction="column" width={250} gap="size-150">
+          <Picker
+            isRequired
+            label="Chart type"
+            items={chartTypeOptions}
+            selectedKey={chartType}
+            onSelectionChange={(key: Key) => setChartType(key)}
+          >
+            {(item) => <Item>{item.name}</Item>}
+          </Picker>
+          <Picker
+            isRequired
+            label="Y axis (the vertical one)"
+            items={axisOptions}
+            selectedKey={yAxis}
+            onSelectionChange={(key: Key) => setYAxis(key)}
+          >
+            {(item) => <Item>{item.name}</Item>}
+          </Picker>
+          <Text>{"This will work best with a metric (numerical data)"}</Text>
+          <Picker
+            isRequired
+            label="X axis (the horizontal one)"
+            items={axisOptions}
+            selectedKey={xAxis}
+            onSelectionChange={(key: Key) => setXAxis(key)}
+          >
+            {(item) => <Item>{item.name}</Item>}
+          </Picker>
+          <Text>
+            {"This will work best with temporal data (dates or timestamps)"}
+          </Text>
+          <Divider size="M" />
+          <Picker
+            label="Series (color)"
+            items={axisOptions}
+            selectedKey={series}
+            onSelectionChange={(key: Key) => setSeries(key)}
+          >
+            {(item) => <Item>{item.name}</Item>}
+          </Picker>
+          <Text>
+            {
+              "This is only required for line charts with multiple lines and will determine what each represents. It will work best if it's a dimension (string)"
+            }
+          </Text>
+          <Divider size="M" />
+          <Text>{"xAxis"}</Text>
+          <Checkbox
+            isSelected={includeXAxis}
+            onChange={() => setIncludeXAxis(!includeXAxis)}
+          >
+            Include xAxis
+          </Checkbox>
+          {includeXAxis && (
+            <Picker
+              label="Position"
+              items={[
+                { id: "top", name: "Top" },
+                { id: "bottom", name: "Bottom" },
+              ]}
+              selectedKey={xAxisProps.position}
+              onSelectionChange={(key: Key) =>
+                setXAxisProps({ ...xAxisProps, position: key as Position })
+              }
+            >
+              {(item) => <Item>{item.name}</Item>}
+            </Picker>
+          )}
+          <Divider size="M" />
+          <Text>{"yAxis"}</Text>
+          <Checkbox
+            isSelected={includeYAxis}
+            onChange={() => setIncludeYAxis(!includeYAxis)}
+          >
+            Include yAxis
+          </Checkbox>
+          <TextField
+            label="title"
+            value={yAxisProps.title}
+            onChange={(input) => setYAxisProps({ ...yAxisProps, title: input })}
+          />
+          <Picker
+            label="Position"
+            items={[
+              { id: "left", name: "Left" },
+              { id: "right", name: "Right" },
+            ]}
+            selectedKey={yAxisProps.position}
+            onSelectionChange={(key: Key) =>
+              setYAxisProps({ ...yAxisProps, position: key as Position })
+            }
+          >
+            {(item) => <Item>{item.name}</Item>}
+          </Picker>
+          <Divider size="M" />
+          <Text>{"Legend"}</Text>
+          <Checkbox
+            isSelected={includeLegend}
+            onChange={() => setIncludeLegend(!includeLegend)}
+          >
+            Include legend
+          </Checkbox>
+          <Picker
+            label="Position"
+            items={[
+              { id: "top", name: "Top" },
+              { id: "bottom", name: "Bottom" },
+              { id: "left", name: "Left" },
+              { id: "right", name: "Right" },
+            ]}
+            selectedKey={legendProps.position}
+            onSelectionChange={(key: Key) =>
+              setLegendProps({ ...legendProps, position: key as Position })
+            }
+          >
+            {(item) => <Item>{item.name}</Item>}
+          </Picker>
+        </Flex>
+      </div>
+      <Divider size="M" orientation="vertical" />
 
       <Flex flexGrow={2}>
-        {buildChart(chartType, chartData.data, xAxis, yAxis, series)}
+        {buildChart(
+          chartType,
+          chartData.data,
+          xAxis,
+          yAxis,
+          series,
+          includeLegend,
+          legendProps,
+          includeXAxis,
+          xAxisProps,
+          includeYAxis,
+          yAxisProps
+        )}
       </Flex>
     </Flex>
   );
