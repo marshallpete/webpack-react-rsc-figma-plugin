@@ -1,11 +1,11 @@
 {
-  "name": "React Spectrum Charts",
-  "id": "webpack-react-sample",
-  "api": "1.0.0",
-  "main": "dist/code.js",
-  "ui": "dist/ui.html",
-  "editorType": ["figma", "figjam"],
-  "networkAccess": {
-    "allowedDomains": ["none"]
-  }
+	"name": "React Spectrum Charts",
+	"id": "1353106247895341313",
+	"api": "1.0.0",
+	"main": "dist/code.js",
+	"ui": "dist/ui.html",
+	"editorType": ["figma", "figjam"],
+	"networkAccess": {
+		"allowedDomains": ["none"]
+	}
 }
