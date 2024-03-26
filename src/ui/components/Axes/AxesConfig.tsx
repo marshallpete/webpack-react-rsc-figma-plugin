@@ -8,8 +8,8 @@ import { v4 as uuid } from 'uuid';
 import { Position } from '@adobe/react-spectrum-charts/';
 
 export const AxesConfig: FC = () => {
-	const dispatch = useDispatch();
 	const axes = useSelector(selectAxes);
+	const dispatch = useDispatch();
 	const nextAxisPosition = useNextAxisPosition();
 
 	return (

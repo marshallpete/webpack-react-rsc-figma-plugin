@@ -8,6 +8,7 @@ import {
 	Bar,
 	BarProps,
 	Chart,
+	Legend,
 	Line,
 	LineProps,
 	Scatter,
@@ -30,7 +31,8 @@ export const ChartPreview = () => {
 const buildChartChildren = (chartState: ChartState) => {
 	const mark = buildMark(chartState.mark);
 	const axes = buildAxes(chartState.axes);
-	return [mark, ...axes];
+	const legends = buildLegends(chartState.legends);
+	return [mark, ...axes, ...legends];
 };
 
 const buildMark = ({ type, props }: ChartState['mark']) => {
@@ -49,4 +51,8 @@ const buildMark = ({ type, props }: ChartState['mark']) => {
 
 const buildAxes = (axes: ChartState['axes']) => {
 	return axes.map((axis) => <Axis key={axis.id} {...axis.props} />);
+};
+
+const buildLegends = (legends: ChartState['legends']) => {
+	return legends.map((axis) => <Legend key={axis.id} {...axis.props} />);
 };

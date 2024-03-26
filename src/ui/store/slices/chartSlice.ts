@@ -1,4 +1,12 @@
-import { AreaProps, AxisProps, BarProps, ChartProps, LineProps, ScatterProps } from '@adobe/react-spectrum-charts';
+import {
+	AreaProps,
+	AxisProps,
+	BarProps,
+	ChartProps,
+	LegendProps,
+	LineProps,
+	ScatterProps,
+} from '@adobe/react-spectrum-charts';
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
@@ -10,12 +18,14 @@ export interface ChartState extends ChartProps {
 		props: AreaProps | BarProps | LineProps | ScatterProps;
 	};
 	axes: { id: string; props: AxisProps }[];
+	legends: { id: string; props: LegendProps }[];
 }
 
 const initialState: ChartState = {
 	data: [],
 	mark: { type: 'bar', props: {} },
 	axes: [],
+	legends: [],
 };
 
 export const chartSlice = createSlice({
@@ -122,6 +132,12 @@ export const chartSlice = createSlice({
 		setData: (state, { payload }: PayloadAction<ChartState['data']>) => {
 			state.data = payload;
 		},
+		addLegend: (state, { payload }: PayloadAction<{ id: string; props: LegendProps }>) => {
+			state.legends.push(payload);
+		},
+		deleteLegend: (state, { payload }: PayloadAction<string>) => {
+			state.legends = state.legends.filter((legend) => legend.id !== payload);
+		},
 		setMarkType: (state, { payload }: PayloadAction<ChartState['mark']['type']>) => {
 			state.mark.type = payload;
 		},
@@ -163,6 +179,7 @@ export const selectData = (state: RootState) => state.chart.data;
 export const selectMarkType = (state: RootState) => state.chart.mark.type;
 export const selectMarkProps = (state: RootState) => state.chart.mark.props;
 export const selectAxes = (state: RootState) => state.chart.axes;
+export const selectLegends = (state: RootState) => state.chart.legends;
 
 // Action creators are generated for each case reducer function
 export const {
@@ -185,6 +202,8 @@ export const {
 	setAxisTitle,
 	setAxisTruncateLabels,
 	setData,
+	addLegend,
+	deleteLegend,
 	setMarkBarLineType,
 	setMarkBarLineWidth,
 	setMarkBarOrientation,
@@ -199,8 +218,3 @@ export const {
 } = chartSlice.actions;
 
 export default chartSlice.reducer;
-
-// setAxisBaseline: (state, { payload }: PayloadAction<{ id: string; baseline: AxisProps['baseline'] }>) => {
-// 	const axisIndex = state.axes.findIndex((axis) => axis.id === payload.id);
-// 	state.axes[axisIndex].props.baseline = payload.baseline;
-// },
