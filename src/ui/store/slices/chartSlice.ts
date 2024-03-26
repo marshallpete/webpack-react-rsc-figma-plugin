@@ -101,6 +101,13 @@ export const chartSlice = createSlice({
 			const axisIndex = state.axes.findIndex((axis) => axis.id === payload.id);
 			state.axes[axisIndex].props.ticks = payload.ticks;
 		},
+		setAxisTickMinStep: (
+			state,
+			{ payload }: PayloadAction<{ id: string; tickMinStep: AxisProps['tickMinStep'] }>
+		) => {
+			const axisIndex = state.axes.findIndex((axis) => axis.id === payload.id);
+			state.axes[axisIndex].props.tickMinStep = payload.tickMinStep;
+		},
 		setAxisTitle: (state, { payload }: PayloadAction<{ id: string; title: AxisProps['title'] }>) => {
 			const axisIndex = state.axes.findIndex((axis) => axis.id === payload.id);
 			state.axes[axisIndex].props.title = payload.title;
@@ -174,6 +181,7 @@ export const {
 	setAxisPosition,
 	setAxisRange,
 	setAxisTicks,
+	setAxisTickMinStep,
 	setAxisTitle,
 	setAxisTruncateLabels,
 	setData,
