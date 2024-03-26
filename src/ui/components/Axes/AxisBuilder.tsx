@@ -22,6 +22,7 @@ import {
 	setAxisLabelAlign,
 	setAxisLabelFontWeight,
 	setAxisLabelOrientation,
+	setAxisTickMinStep,
 	setAxisTicks,
 	setAxisTitle,
 	setAxisTruncateLabels,
@@ -56,6 +57,7 @@ export const AxisBuilder: FC<AxisBuilderProps> = ({ id }) => {
 		labelOrientation,
 		position,
 		ticks,
+		tickMinStep,
 		title,
 		truncateLabels,
 	} = useAxis(id);
@@ -102,13 +104,21 @@ export const AxisBuilder: FC<AxisBuilderProps> = ({ id }) => {
 					<AxisRange id={id} />
 					{baseline && (
 						<NumberField
-							label="Baseline offset"
 							defaultValue={baselineOffset ?? 0}
-							onChange={(value) => dispatch(setAxisBaselineOffset({ id, baselineOffset: value }))}
 							hideStepper
+							label="Baseline offset"
+							onChange={(value) => dispatch(setAxisBaselineOffset({ id, baselineOffset: value }))}
 							width="100%"
 						/>
 					)}
+					<NumberField
+						defaultValue={tickMinStep}
+						hideStepper
+						label="Minimum tick step"
+						minValue={0}
+						onChange={(value) => dispatch(setAxisTickMinStep({ id, tickMinStep: value }))}
+						width="100%"
+					/>
 					<SectionDivider label="Axis labels" />
 					<Flex direction="row" gap="size-100">
 						<Switch
