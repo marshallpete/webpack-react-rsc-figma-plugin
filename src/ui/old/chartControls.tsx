@@ -84,9 +84,9 @@ export const ChartControls: FC = () => {
 		if (!yAxisProps.title) setYAxisProps({ ...yAxisProps, title: yAxis });
 	}, [yAxis]);
 
-  useEffect(() => {
-    if (!xAxisProps.title) setXAxisProps({ ...xAxisProps, title: xAxis });
-  }, [xAxis]);
+	useEffect(() => {
+		if (!xAxisProps.title) setXAxisProps({ ...xAxisProps, title: xAxis });
+	}, [xAxis]);
 
 	return (
 		<>

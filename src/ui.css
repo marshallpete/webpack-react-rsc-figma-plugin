@@ -103,11 +103,21 @@ img {
 	width: 2rem;
 }
 
-#content {
+/* #content {
 	height: calc(100% - var(--padding) * 2);
 	width: calc(100% - var(--padding) * 2);
 	overflow-y: scroll;
 	padding-top: var(--padding);
 	padding-left: var(--padding);
 	padding-right: var(--padding);
+} */
+
+.content {
+	overflow-y: auto;
+	border-color: red;
+	border-width: 2px;
 }
+
+/* div.action-bar.action-bar.action-bar > div > button {
+	justify-content: center;
+} */
