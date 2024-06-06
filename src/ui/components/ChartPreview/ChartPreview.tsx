@@ -14,7 +14,7 @@ import {
 	Scatter,
 	ScatterProps,
 } from '@adobe/react-spectrum-charts';
-import { useProvider } from '@adobe/react-spectrum';
+import { ActionButton, Button, Grid, Tooltip, TooltipTrigger, View, useProvider } from '@adobe/react-spectrum';
 
 export const ChartPreview = () => {
 	const chartState = useSelector(selectChartState);
@@ -22,9 +22,17 @@ export const ChartPreview = () => {
 
 	const children = buildChartChildren(chartState);
 	return (
-		<Chart data={chartState.data} height={600} colorScheme={colorScheme}>
-			{children}
-		</Chart>
+		<>
+			<Chart data={chartState.data} height={600} colorScheme={colorScheme}>
+				{children}
+			</Chart>
+			<div className="action-container">
+				<TooltipTrigger>
+					<Button variant="accent">Build</Button>
+					<Tooltip>Add this chart to the Figma canvas</Tooltip>
+				</TooltipTrigger>
+			</div>
+		</>
 	);
 };
 

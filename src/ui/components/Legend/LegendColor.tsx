@@ -1,16 +1,21 @@
-import React, { useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectMarkProps, setMarkColor } from '../../store/slices/chartSlice';
+import React, { FC, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+import { useLegend } from '../../hooks/useLegend';
+import { setLegendColor, setMarkColor } from '../../store/slices/chartSlice';
 import { InputType } from '../../types';
 import { isSpectrumColorValue } from '../../utils';
-import { MultiInput } from './MultiInput/MultiInput';
+import { MultiInput } from '../Inputs/MultiInput/MultiInput';
 
-export const Color = () => {
-	const { color } = useSelector(selectMarkProps);
+interface LegendColorProps {
+	id: string;
+}
+
+export const LegendColor: FC<LegendColorProps> = ({ id }) => {
+	const { color } = useLegend(id);
 	const dispatch = useDispatch();
 
 	const inputType = useMemo(() => {
-		if (!color || typeof color === 'string' || Array.isArray(color)) return 'key';
+		if (!color || typeof color === 'string') return 'key';
 		if (isSpectrumColorValue(color.value)) {
 			return 'spectrumValue';
 		}
@@ -19,10 +24,10 @@ export const Color = () => {
 
 	const onInputChange = (value: string, type: InputType) => {
 		if (type === 'key') {
-			dispatch(setMarkColor(value));
+			dispatch(setLegendColor({ id, color: value }));
 			return;
 		}
-		dispatch(setMarkColor({ value }));
+		dispatch(setLegendColor({ id, color: { value } }));
 	};
 
 	const inputValue = useMemo(() => {
@@ -30,7 +35,6 @@ export const Color = () => {
 		if (typeof color === 'object' && 'value' in color) {
 			return color.value;
 		}
-		if (Array.isArray(color)) return color[0];
 		return color;
 	}, [color, inputType]);
 

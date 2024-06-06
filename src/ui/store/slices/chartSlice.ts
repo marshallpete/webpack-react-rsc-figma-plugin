@@ -138,6 +138,32 @@ export const chartSlice = createSlice({
 		deleteLegend: (state, { payload }: PayloadAction<string>) => {
 			state.legends = state.legends.filter((legend) => legend.id !== payload);
 		},
+		setLegendColor: (state, { payload }: PayloadAction<{ id: string; color: LegendProps['color'] }>) => {
+			const legendIndex = state.legends.findIndex((legend) => legend.id === payload.id);
+			state.legends[legendIndex].props.color = payload.color;
+		},
+		setLegendPosition: (state, { payload }: PayloadAction<{ id: string; position: LegendProps['position'] }>) => {
+			const legendIndex = state.legends.findIndex((legend) => legend.id === payload.id);
+			state.legends[legendIndex].props.position = payload.position;
+		},
+		setLegendHighlight: (
+			state,
+			{ payload }: PayloadAction<{ id: string; highlight: LegendProps['highlight'] }>
+		) => {
+			const legendIndex = state.legends.findIndex((legend) => legend.id === payload.id);
+			state.legends[legendIndex].props.highlight = payload.highlight;
+		},
+		setLegendIsToggleable: (
+			state,
+			{ payload }: PayloadAction<{ id: string; isToggleable: LegendProps['isToggleable'] }>
+		) => {
+			const legendIndex = state.legends.findIndex((legend) => legend.id === payload.id);
+			state.legends[legendIndex].props.isToggleable = payload.isToggleable;
+		},
+		setLegendTitle: (state, { payload }: PayloadAction<{ id: string; title: LegendProps['title'] }>) => {
+			const legendIndex = state.legends.findIndex((legend) => legend.id === payload.id);
+			state.legends[legendIndex].props.title = payload.title;
+		},
 		setMarkType: (state, { payload }: PayloadAction<ChartState['mark']['type']>) => {
 			state.mark.type = payload;
 		},
@@ -204,6 +230,11 @@ export const {
 	setData,
 	addLegend,
 	deleteLegend,
+	setLegendColor,
+	setLegendPosition,
+	setLegendHighlight,
+	setLegendIsToggleable,
+	setLegendTitle,
 	setMarkBarLineType,
 	setMarkBarLineWidth,
 	setMarkBarOrientation,

@@ -118,6 +118,12 @@ img {
 	border-width: 2px;
 }
 
+.action-container {
+	position: fixed;
+	bottom: 12px;
+	right: 12px;
+}
+
 /* div.action-bar.action-bar.action-bar > div > button {
 	justify-content: center;
 } */

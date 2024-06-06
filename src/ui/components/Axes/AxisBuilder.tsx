@@ -10,8 +10,10 @@ import {
 	Well,
 } from '@adobe/react-spectrum';
 import { LabelAlign } from '@adobe/react-spectrum-charts/';
+import Delete from '@spectrum-icons/workflow/Delete';
 import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
+import { FontWeight } from 'vega';
 import { useAxis } from '../../hooks/useAxis';
 import {
 	deleteAxis,
@@ -27,18 +29,16 @@ import {
 	setAxisTitle,
 	setAxisTruncateLabels,
 } from '../../store/slices/chartSlice';
-import { AlignPicker } from '../Inputs/AlignPicker';
-import { PositionPicker } from '../Inputs/PositionPicker';
-import { SectionDivider } from '../SectionDivider';
-import Delete from '@spectrum-icons/workflow/Delete';
-import { FontWeightPicker } from '../Inputs/FontWeightPicker';
-import { FontWeight } from 'vega';
-import { LabelFromatPicker } from '../Inputs/LabelFormatPicker';
 import { AdvancedSettings } from '../AdvancedSettings';
+import { AlignPicker } from '../Inputs/AlignPicker';
+import { FontWeightPicker } from '../Inputs/FontWeightPicker';
+import { LabelFromatPicker } from '../Inputs/LabelFormatPicker';
 import { NumberFormat } from '../Inputs/NumberFormat';
-import { GranularityPicker } from './GranularityPicker';
 import { OrientationInput } from '../Inputs/Orientation';
+import { SectionDivider } from '../SectionDivider';
+import { AxisPositionPicker } from './AxisPositionPicker';
 import { AxisRange } from './AxisRange';
+import { GranularityPicker } from './GranularityPicker';
 
 interface AxisBuilderProps {
 	id: string;
@@ -76,7 +76,7 @@ export const AxisBuilder: FC<AxisBuilderProps> = ({ id }) => {
 						<Tooltip>Delete axis</Tooltip>
 					</TooltipTrigger>
 				</Flex>
-				<PositionPicker id={id} />
+				<AxisPositionPicker id={id} />
 				<TextField
 					width="100%"
 					defaultValue={title}

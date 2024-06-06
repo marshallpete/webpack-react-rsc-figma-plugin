@@ -12,6 +12,7 @@ import { Opacity } from '../Inputs/Opacity';
 import { SectionDivider } from '../SectionDivider';
 import { useDataKeys } from '../../hooks/useDataKeys';
 import { LineWidthInput } from '../Inputs/LineWidthInput';
+import { AdvancedSettings } from '../AdvancedSettings';
 
 export const ScatterChartBuilder: FC = () => {
 	const { dimensionScaleType, dimension } = useSelector(selectMarkProps) as ScatterProps;
@@ -41,12 +42,14 @@ export const ScatterChartBuilder: FC = () => {
 				onInputChange={(value) => dispatch(setMarkScatterDimensionScaleType(value))}
 			/>
 			<Metric />
-			<SectionDivider label="Point Style" />
 			<Color />
-			<Opacity />
-			<SectionDivider label="Border Style" />
-			<LineWidthInput />
-			<LineTypeInput />
+			<AdvancedSettings>
+				<SectionDivider label="Point Style" />
+				<Opacity />
+				<SectionDivider label="Border Style" />
+				<LineWidthInput />
+				<LineTypeInput />
+			</AdvancedSettings>
 		</Flex>
 	);
 };

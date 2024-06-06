@@ -26,3 +26,7 @@ export const csvToJson = (csvString: string): Record<string, unknown>[] => {
 		}, {});
 	});
 };
+
+export const isSpectrumColorValue = (color: string): boolean => {
+	return color.match(/(red|blue|green)-[4-9]00/) !== null;
+};

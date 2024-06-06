@@ -11,6 +11,7 @@ import { Metric } from '../Inputs/Metric';
 import { Opacity } from '../Inputs/Opacity';
 import { SectionDivider } from '../SectionDivider';
 import { useDataKeys } from '../../hooks/useDataKeys';
+import { AdvancedSettings } from '../AdvancedSettings';
 
 export const LineChartBuilder: FC = () => {
 	const { scaleType, dimension } = useSelector(selectMarkProps) as LineProps;
@@ -43,7 +44,9 @@ export const LineChartBuilder: FC = () => {
 			<SectionDivider label="Line Style" />
 			<Color />
 			<LineTypeInput />
-			<Opacity />
+			<AdvancedSettings>
+				<Opacity />
+			</AdvancedSettings>
 		</Flex>
 	);
 };
