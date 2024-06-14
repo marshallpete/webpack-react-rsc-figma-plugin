@@ -76,10 +76,10 @@ export const AxisBuilder: FC<AxisBuilderProps> = ({ id }) => {
 						<Tooltip>Delete axis</Tooltip>
 					</TooltipTrigger>
 				</Flex>
-				<PositionPicker id={id} />
+				<PositionPicker type="axis" position={position} id={id} />
 				<TextField
 					width="100%"
-					defaultValue={title}
+					defaultValue={title as string}
 					label="Title"
 					onChange={(title) => dispatch(setAxisTitle({ id, title: title || undefined }))}
 				/>

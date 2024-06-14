@@ -130,7 +130,7 @@ export const MappingsTab: FC<MappingsTabProps> = ({
 						<>
 							<TextField
 								label="title"
-								value={xAxisProps.title}
+								value={xAxisProps.title as string}
 								onChange={(input) => setYAxisProps({ ...xAxisProps, title: input })}
 							/>
 							<Picker
@@ -174,7 +174,7 @@ export const MappingsTab: FC<MappingsTabProps> = ({
 						<>
 							<TextField
 								label="title"
-								value={yAxisProps.title}
+								value={yAxisProps.title as string}
 								onChange={(input) => setYAxisProps({ ...yAxisProps, title: input })}
 							/>
 							<Picker

@@ -1,8 +1,16 @@
-import { AreaProps, AxisProps, BarProps, ChartProps, LineProps, ScatterProps } from '@adobe/react-spectrum-charts';
-import { createSlice } from '@reduxjs/toolkit';
+import {
+	AreaProps,
+	AxisProps,
+	BarProps,
+	ChartProps,
+	LegendProps,
+	LineProps,
+	ScatterProps,
+} from '@adobe/react-spectrum-charts';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import { ChartType } from '../../types';
 import { RootState } from '../store';
-import { AxisType, ChartType } from '../../types';
 
 export interface ChartState extends ChartProps {
 	mark: {
@@ -10,12 +18,14 @@ export interface ChartState extends ChartProps {
 		props: AreaProps | BarProps | LineProps | ScatterProps;
 	};
 	axes: { id: string; props: AxisProps }[];
+	legends: { id: string; props: LegendProps }[];
 }
 
 const initialState: ChartState = {
 	data: [],
 	mark: { type: 'bar', props: {} },
 	axes: [],
+	legends: [],
 };
 
 export const chartSlice = createSlice({
@@ -119,9 +129,11 @@ export const chartSlice = createSlice({
 			const axisIndex = state.axes.findIndex((axis) => axis.id === payload.id);
 			state.axes[axisIndex].props.truncateLabels = payload.truncateLabels;
 		},
+
 		setData: (state, { payload }: PayloadAction<ChartState['data']>) => {
 			state.data = payload;
 		},
+
 		setMarkType: (state, { payload }: PayloadAction<ChartState['mark']['type']>) => {
 			state.mark.type = payload;
 		},
@@ -155,6 +167,35 @@ export const chartSlice = createSlice({
 		setMarkScatterDimensionScaleType: (state, { payload }: PayloadAction<ScatterProps['dimensionScaleType']>) => {
 			(state.mark.props as ScatterProps).dimensionScaleType = payload;
 		},
+
+		addLegend: (state, { payload }: PayloadAction<{ id: string; props: LegendProps }>) => {
+			state.legends.push(payload);
+		},
+		deleteLegend: (state, { payload }: PayloadAction<string>) => {
+			state.legends = state.legends.filter((legend) => legend.id !== payload);
+		},
+		setLegendHighlight: (
+			state,
+			{ payload }: PayloadAction<{ id: string; highlight: LegendProps['highlight'] }>
+		) => {
+			const legendIndex = state.legends.findIndex((legend) => legend.id === payload.id);
+			state.legends[legendIndex].props.highlight = payload.highlight;
+		},
+		setLegendIsToggleable: (
+			state,
+			{ payload }: PayloadAction<{ id: string; isToggleable: LegendProps['isToggleable'] }>
+		) => {
+			const legendIndex = state.legends.findIndex((legend) => legend.id === payload.id);
+			state.legends[legendIndex].props.isToggleable = payload.isToggleable;
+		},
+		setLegendPosition: (state, { payload }: PayloadAction<{ id: string; position: LegendProps['position'] }>) => {
+			const legendIndex = state.legends.findIndex((legend) => legend.id === payload.id);
+			state.legends[legendIndex].props.position = payload.position;
+		},
+		setLegendTitle: (state, { payload }: PayloadAction<{ id: string; title: LegendProps['title'] }>) => {
+			const legendIndex = state.legends.findIndex((legend) => legend.id === payload.id);
+			state.legends[legendIndex].props.title = payload.title;
+		},
 	},
 });
 
@@ -163,6 +204,7 @@ export const selectData = (state: RootState) => state.chart.data;
 export const selectMarkType = (state: RootState) => state.chart.mark.type;
 export const selectMarkProps = (state: RootState) => state.chart.mark.props;
 export const selectAxes = (state: RootState) => state.chart.axes;
+export const selectLegends = (state: RootState) => state.chart.legends;
 
 // Action creators are generated for each case reducer function
 export const {
@@ -196,6 +238,12 @@ export const {
 	setMarkOpacity,
 	setMarkScatterDimensionScaleType,
 	setMarkType,
+	addLegend,
+	deleteLegend,
+	setLegendHighlight,
+	setLegendIsToggleable,
+	setLegendPosition,
+	setLegendTitle,
 } = chartSlice.actions;
 
 export default chartSlice.reducer;
